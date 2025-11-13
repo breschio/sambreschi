@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sam Breschi Training</title>
+    <title>Cursor - The AI-powered code editor</title>
     <style>
         * {
             margin: 0;
@@ -12,687 +12,893 @@
         }
 
         :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --border: #aaaaaa;
-        }
-
-        [data-theme="dark"] {
-            --bg: #000000;
-            --text: #ffffff;
-            --border: #555555;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root:not([data-theme="light"]) {
-                --bg: #000000;
-                --text: #ffffff;
-                --border: #555555;
-            }
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --border-color: #2a2a2a;
+            --accent: #ffffff;
         }
 
         body {
-            font-family: "Courier New", Courier, monospace;
-            background-color: var(--bg);
-            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
             line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
         /* Header */
         header {
-            padding: 1.5rem 1rem;
             position: sticky;
             top: 0;
-            background-color: var(--bg);
-            z-index: 100;
+            background-color: var(--bg-dark);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
         }
 
-        .header-content {
-            max-width: 960px;
+        .header-container {
+            max-width: 1280px;
             margin: 0 auto;
+            padding: 0 2rem;
             display: flex;
-            flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 1rem;
         }
 
-        .wordmark {
-            font-weight: bold;
-            font-size: 1.1rem;
-            letter-spacing: 0.05em;
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .hamburger {
-            display: none;
-            background: none;
-            border: none;
-            color: var(--text);
-            cursor: pointer;
-            padding: 0.5rem;
-            font-size: 1.5rem;
-            line-height: 1;
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-decoration: none;
         }
 
         nav {
             display: flex;
-            gap: 1.5rem;
+            align-items: center;
+            gap: 2rem;
         }
 
         nav a {
-            color: var(--text);
+            color: var(--text-secondary);
             text-decoration: none;
-            font-size: 0.95rem;
+            font-size: 0.875rem;
+            transition: color 0.2s;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            color: var(--text-primary);
         }
 
-        .theme-toggle {
-            background: none;
-            border: 1px solid var(--border);
-            border-radius: 3px;
-            color: var(--text);
-            padding: 0.25rem 0.75rem;
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.85rem;
-            transition: all 0.2s ease;
+        .btn-download {
+            background-color: var(--text-primary);
+            color: var(--bg-dark);
+            padding: 0.5rem 1.25rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: opacity 0.2s;
         }
 
-        .theme-toggle:hover {
-            background-color: var(--text);
-            color: var(--bg);
+        .btn-download:hover {
+            opacity: 0.9;
         }
 
-        /* Mobile Navigation */
-        @media (max-width: 767px) {
-            .hamburger {
-                display: block;
-                order: 2;
-            }
-
-            .header-right {
-                width: 100%;
-                justify-content: space-between;
-            }
-
-            .theme-toggle {
-                order: 1;
-            }
-
-            nav {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background-color: var(--bg);
-                border-bottom: 1px solid var(--border);
-                flex-direction: column;
-                gap: 0;
-                padding: 1rem 0;
-            }
-
-            nav.active {
-                display: flex;
-            }
-
-            nav a {
-                padding: 1rem 1.5rem;
-                border-bottom: 1px solid var(--border);
-            }
-
-            nav a:last-child {
-                border-bottom: none;
-            }
-        }
-
-        /* Container */
-        .container {
-            max-width: 960px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        /* Sections */
-        section {
-            padding: 4rem 0;
-        }
-
-        section h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: bold;
-        }
-
-        /* Hero */
+        /* Hero Section */
         .hero {
-            padding: 5rem 0;
+            padding: 6rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
         }
 
         .hero-content {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-        }
-
-        .hero-image {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: var(--border);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-
-        .hero-text {
-            text-align: center;
+            text-align: left;
+            max-width: 900px;
         }
 
         .hero h1 {
-            font-size: 2.5rem;
-            line-height: 1.3;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .hero-subheadline {
-            font-size: 1.1rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-value-prop {
-            font-size: 1rem;
-            margin-bottom: 2.5rem;
-            line-height: 1.7;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background-color: var(--bg);
-            color: var(--text);
-            border: 2px solid var(--text);
-            border-radius: 3px;
-            text-decoration: none;
-            font-family: inherit;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--text);
-            color: var(--bg);
-        }
-
-        /* Mission Section */
-        .mission {
-            background-color: var(--bg);
-            padding: 4rem 0;
-        }
-
-        .mission-statement {
-            font-size: 1.5rem;
-            line-height: 1.7;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            font-weight: 500;
-        }
-
-        /* Class Section */
-        .class-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 3rem;
-        }
-
-        .class-intro {
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
+            line-height: 1.05;
             margin-bottom: 2rem;
+            letter-spacing: -0.03em;
+            text-align: left;
         }
 
-        .class-columns {
-            display: grid;
-            gap: 3rem;
+        .hero .btn-download {
+            margin-top: 1.5rem;
+            padding: 0.875rem 1.75rem;
+            font-size: 0.9375rem;
+            display: inline-block;
         }
 
-        .class-structure ul {
-            list-style: none;
+        .hero-image {
+            margin-top: 4rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .hero-image-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
             font-size: 1rem;
         }
 
-        .class-structure li {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid var(--border);
+        /* Integrations Section */
+        .integrations {
+            padding: 3rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
         }
 
-        .class-structure li:first-child {
-            border-top: 1px solid var(--border);
+        .integrations-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.5rem;
+            align-items: center;
         }
 
-        .schedule-card {
-            border: 1px solid var(--border);
+        .integration-item {
+            background-color: var(--bg-card);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Feature Sections */
+        .feature-section {
+            padding: 8rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .feature-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 8rem;
+        }
+
+        .feature-container:nth-child(even) {
+            direction: rtl;
+        }
+
+        .feature-container:nth-child(even) > * {
+            direction: ltr;
+        }
+
+        .feature-content h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+
+        .feature-content p {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .feature-image {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-image-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 8rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonials-section h2 {
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 700;
+            margin-bottom: 4rem;
+            letter-spacing: -0.02em;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .testimonial-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            font-size: 0.9375rem;
+        }
+
+        .testimonial-author {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .testimonial-role {
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 8rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .blog-section h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .blog-card-image {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .blog-card-content {
             padding: 2rem;
         }
 
-        .schedule-card p {
+        .blog-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .blog-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 0.9375rem;
+        }
+
+        .blog-card a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .blog-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* Open Source Section */
+        .opensource-section {
+            padding: 8rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .opensource-section h2 {
+            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            letter-spacing: -0.02em;
+        }
+
+        .opensource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .opensource-card {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .opensource-card h3 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+        }
+
+        .opensource-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: 0.9375rem;
+        }
+
+        .opensource-card a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .opensource-card a:hover {
+            text-decoration: underline;
+        }
+
+        .opensource-cta {
+            text-align: center;
+        }
+
+        .opensource-cta .btn-download {
+            padding: 0.875rem 1.75rem;
+            font-size: 0.9375rem;
+        }
+
+        /* Mission Section */
+        .mission-section {
+            padding: 8rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .mission-statement {
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .mission-image {
+            margin-top: 3rem;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .mission-image-placeholder {
+            width: 100%;
+            aspect-ratio: 21/9;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .mission-likes {
+            margin-top: 2rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            padding: 4rem 2rem;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .review-item {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-stars {
+            color: #ffd700;
             margin-bottom: 0.5rem;
             font-size: 1rem;
         }
 
-        .schedule-card p:last-child {
-            margin-bottom: 0;
+        .review-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+            font-size: 0.9375rem;
         }
 
-        .class-image {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            background-color: var(--border);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-top: 2rem;
+        .review-author {
+            color: var(--text-primary);
+            font-weight: 500;
+            font-size: 0.875rem;
         }
 
-        /* Philosophy Section */
-        .philosophy {
-            background-color: var(--bg);
-        }
-
-        .philosophy-grid {
-            display: grid;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .philosophy-item {
-            padding: 2rem 0;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
+        /* CTA Section */
+        .cta-section {
+            padding: 8rem 2rem;
             text-align: center;
-            font-size: 1.1rem;
-            line-height: 1.7;
+            max-width: 1280px;
+            margin: 0 auto;
         }
 
-        .philosophy-image {
-            width: 100%;
-            aspect-ratio: 21 / 9;
-            background-color: var(--border);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            opacity: 0.6;
-            margin-top: 3rem;
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
         }
 
-        /* Section Intro */
-        .section-intro {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            max-width: 700px;
-        }
-
-        /* Program Card */
-        .program-card {
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            max-width: 600px;
-        }
-
-        .program-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        .program-card p {
-            font-size: 1rem;
-            line-height: 1.7;
-        }
-
-        /* Contact Links */
-        #contact a {
-            color: var(--text);
-            text-decoration: underline;
-        }
-
-        #contact a:hover {
-            opacity: 0.7;
+        .cta-section .btn-download {
+            padding: 0.875rem 1.75rem;
+            font-size: 0.9375rem;
         }
 
         /* Footer */
         footer {
-            border-top: 1px solid var(--border);
-            padding: 3rem 1rem;
-            text-align: center;
+            background-color: var(--bg-card);
+            border-top: 1px solid var(--border-color);
+            padding: 4rem 2rem 2rem;
         }
 
-        footer p {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .footer-container {
+            max-width: 1280px;
+            margin: 0 auto;
         }
 
-        footer a {
-            color: var(--text);
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-column a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8125rem;
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-bottom p {
+            color: var(--text-secondary);
+            font-size: 0.8125rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .footer-social a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: color 0.2s;
+        }
+
+        .footer-social a:hover {
+            color: var(--text-primary);
         }
 
         /* Responsive */
-        @media (min-width: 768px) {
-            .hero h1 {
-                font-size: 3rem;
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
             }
 
-            .hero-content {
-                flex-direction: row;
-                align-items: center;
-                gap: 4rem;
+            nav {
+                gap: 1rem;
             }
 
-            .hero-image {
-                flex: 1;
-                aspect-ratio: 3 / 4;
+            nav a {
+                font-size: 0.85rem;
             }
 
-            .hero-text {
-                flex: 1;
-                text-align: left;
+            .feature-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .hero-subheadline {
-                margin-left: 0;
-            }
-
-            .hero-value-prop {
-                margin-left: 0;
-            }
-
-            .class-columns {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .philosophy-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 3rem;
-            }
-
-            .philosophy-item {
-                border-top: none;
-                border-bottom: none;
-                border-left: 1px solid var(--border);
-                border-right: 1px solid var(--border);
-                padding: 2rem 1.5rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            section {
-                padding: 6rem 0;
+            .feature-container:nth-child(even) {
+                direction: ltr;
             }
 
             .hero {
-                padding: 7rem 0;
+                padding: 4rem 1rem;
             }
 
-            .mission {
-                padding: 5rem 0;
+            .feature-section,
+            .testimonials-section,
+            .blog-section,
+            .opensource-section,
+            .mission-section,
+            .cta-section {
+                padding: 4rem 1rem;
             }
 
-            .mission-statement {
-                font-size: 1.75rem;
+            .testimonials-grid,
+            .blog-grid,
+            .opensource-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
-        <div class="header-content">
-            <div class="wordmark">Sam Breschi — Mindful Fitness</div>
-            <div class="header-right">
-                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                    <span id="themeLabel">Dark</span>
-                </button>
-                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-                    <span id="hamburgerIcon">☰</span>
-                </button>
-                <nav id="nav">
-                    <a href="#about">About</a>
-                    <a href="#method">Method</a>
-                    <a href="#programs">Programs</a>
-                    <a href="#contact">Contact</a>
-                </nav>
-            </div>
+        <div class="header-container">
+            <a href="#" class="logo">Sam Breschi</a>
+            <nav>
+                <a href="#docs">Docs</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#blog">Blog</a>
+                <a href="#community">Community</a>
+                <a href="#signin">Sign in</a>
+                <a href="#download" class="btn-download">Apply</a>
+            </nav>
         </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-image">
-                        [Hero Image]
-                    </div>
-                    <div class="hero-text">
-                        <h1>Build the body you want.</h1>
-                        <div class="hero-subheadline">
-                            Private training for people who've already built a life.
-                        </div>
-                        <a href="#programs" class="btn-primary">Apply for 1:1 Coaching</a>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Building stronger bodies, for people who have already built a life.</h1>
+            <a href="#download" class="btn-download">Apply for coaching</a>
+        </div>
+        <div class="hero-image">
+            <img src="images/sam-hero-gpt-1.png" alt="Sam Breschi">
+        </div>
+    </section>
+
+    <!-- Integrations Section -->
+    <section class="integrations">
+        <div class="integrations-grid">
+            <div class="integration-item">Stripe</div>
+            <div class="integration-item">OpenAI</div>
+            <div class="integration-item">Vercel</div>
+            <div class="integration-item">Supabase</div>
+            <div class="integration-item">Replit</div>
+            <div class="integration-item">Linear</div>
+            <div class="integration-item">Airtable</div>
+        </div>
+    </section>
+
+    <!-- Feature: AI-powered Code Generation -->
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-content">
+                <h2>AI-powered code generation</h2>
+                <p>Get intelligent code suggestions, fixes, and improvements powered by advanced AI. Cursor understands your codebase and helps you write better code faster.</p>
+                <p>Fix bugs, implement features, and refactor code with AI assistance that learns from your project context.</p>
+            </div>
+            <div class="feature-image">
+                <div class="feature-image-placeholder">
+                    AI Code Generation Screenshot
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Mission Section -->
-        <section id="mission" class="mission">
-            <div class="container">
-                <p class="mission-statement">
-                    You define success. I design the system—training, nutrition, recovery, and mindfulness—to deliver it.
-                </p>
+    <!-- Feature: Chat with Code -->
+    <section class="feature-section">
+        <div class="feature-container reverse">
+            <div class="feature-content">
+                <h2>Chat with your code</h2>
+                <p>Have natural conversations with your codebase. Ask questions, get explanations, and receive refactoring suggestions.</p>
+                <p>Understand complex codebases faster with AI that can explain any part of your code in plain English.</p>
             </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about">
-            <div class="container">
-                <h2>About</h2>
-                <p class="section-intro">
-                    <strong>Personalized. Measurable. Sustainable.</strong><br>
-                    No generic plans, no all-or-nothing mindset. We build strength, balance, and awareness that fit your life.
-                </p>
-                <div class="class-image">
-                    [About Image]
+            <div class="feature-image">
+                <div class="feature-image-placeholder">
+                    Chat Interface Screenshot
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Method Section -->
-        <section id="method">
-            <div class="container">
-                <h2>Method</h2>
-                <div class="class-image" style="margin-bottom: 2rem;">
-                    [Method Image]
-                </div>
-                <p class="section-intro">
-                    Assess → Design → Iterate
-                </p>
-                <div class="philosophy-grid">
-                    <div class="philosophy-item">
-                        <strong>Assess where you are</strong>
-                    </div>
-                    <div class="philosophy-item">
-                        <strong>Design a program around your goals</strong>
-                    </div>
-                    <div class="philosophy-item">
-                        <strong>Iterate weekly until it feels effortless</strong>
-                    </div>
-                </div>
-                <p class="section-intro" style="margin-top: 2rem;">
-                    We track what matters to you—strength, energy, aesthetics, or simply feeling great.
-                </p>
+    <!-- Feature: Debugging with AI -->
+    <section class="feature-section">
+        <div class="feature-container">
+            <div class="feature-content">
+                <h2>Debugging with AI</h2>
+                <p>Get instant help understanding errors, tracing execution, and fixing bugs. Cursor's AI analyzes your code and suggests solutions.</p>
+                <p>Never get stuck on a bug again. Get intelligent debugging assistance that understands your entire codebase.</p>
             </div>
-        </section>
-
-        <!-- Programs Section -->
-        <section id="programs">
-            <div class="container">
-                <h2>Programs</h2>
-                <div class="class-image" style="margin-bottom: 2.5rem;">
-                    [Programs Image]
-                </div>
-                <div class="program-card">
-                    <h3>1:1 Coaching — $3,500/mo</h3>
-                    <p>Bespoke partnership. Ongoing support. Unlimited communication.</p>
-                    <p style="margin-top: 1rem;">
-                        <em>Orientation Month: define goals, baselines, and systems. Cancel anytime.</em>
-                    </p>
-                    <a href="#contact" class="btn-primary" style="margin-top: 1.5rem;">Apply Now</a>
+            <div class="feature-image">
+                <div class="feature-image-placeholder">
+                    Debugging Screenshot
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Coach Section -->
-        <section id="coach">
-            <div class="container">
-                <h2>Coach</h2>
-                <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Meet Sam Breschi</h3>
-                <p class="section-intro">
-                    Strength coach + yoga teacher. 10+ years experience helping high-performing individuals create freedom through mindful fitness.
-                </p>
-                <div class="class-image">
-                    [Coach Image]
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <h2>Stay up to date.</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-card-image">Blog Post Image</div>
+                <div class="blog-card-content">
+                    <h3>Latest Updates</h3>
+                    <p>Stay informed about new features, improvements, and best practices.</p>
+                    <a href="#">Read more →</a>
                 </div>
             </div>
-        </section>
-
-        <!-- Retreats Section -->
-        <section id="retreats">
-            <div class="container">
-                <h2>Retreats</h2>
-                <div class="philosophy-image">
-                    [Retreats Image]
+            <div class="blog-card">
+                <div class="blog-card-image">Blog Post Image</div>
+                <div class="blog-card-content">
+                    <h3>Productivity Tips</h3>
+                    <p>Learn how to get the most out of Cursor and boost your coding productivity.</p>
+                    <a href="#">Read more →</a>
                 </div>
-                <p class="section-intro" style="margin-top: 2rem;">
-                    Immersive small-group experiences combining movement, recovery, and awareness.
-                </p>
-                <a href="#contact" class="btn-primary">Inquire for Next Date</a>
             </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-            <div class="container">
-                <h2>Contact</h2>
-                <p class="section-intro">
-                    <strong>Email:</strong> sam@sambreschi.com<br>
-                    <strong>Instagram:</strong> <a href="https://instagram.com/sambreschi" target="_blank">@sambreschi</a><br>
-                    <strong>Newsletter:</strong> Weekly insights on sustainable strength.
-                </p>
+            <div class="blog-card">
+                <div class="blog-card-image">Blog Post Image</div>
+                <div class="blog-card-content">
+                    <h3>Community Stories</h3>
+                    <p>See how developers around the world are using Cursor to build amazing things.</p>
+                    <a href="#">Read more →</a>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <h2>The new way to build software.</h2>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p>"Cursor is the best editor I've ever used. It's like having a senior engineer pair programming with you 24/7."</p>
+                <div class="testimonial-author">John Doe</div>
+                <div class="testimonial-role">Staff Engineer at Tech Corp</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Cursor has transformed how I write code. The AI assistance is incredibly intelligent and context-aware."</p>
+                <div class="testimonial-author">Jane Smith</div>
+                <div class="testimonial-role">Senior Developer at Startup Inc</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"I can't imagine coding without Cursor anymore. It's become an essential part of my workflow."</p>
+                <div class="testimonial-author">Mike Johnson</div>
+                <div class="testimonial-role">Lead Engineer at DevCo</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"The productivity gains are incredible. Cursor helps me ship features faster than ever before."</p>
+                <div class="testimonial-author">Sarah Williams</div>
+                <div class="testimonial-role">Full Stack Developer</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Cursor understands my codebase better than I do sometimes. It's like magic."</p>
+                <div class="testimonial-author">David Brown</div>
+                <div class="testimonial-role">Engineering Manager</div>
+            </div>
+            <div class="testimonial-card">
+                <p>"Best investment I've made for my development workflow. Cursor pays for itself in time saved."</p>
+                <div class="testimonial-author">Emily Davis</div>
+                <div class="testimonial-role">Principal Engineer</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Source Section -->
+    <section class="opensource-section">
+        <h2>Open source.</h2>
+        <div class="opensource-grid">
+            <div class="opensource-card">
+                <h3>Open source</h3>
+                <p>Contribute to Cursor's core.</p>
+                <a href="#">Learn more →</a>
+            </div>
+            <div class="opensource-card">
+                <h3>Open source</h3>
+                <p>Extend Cursor with plugins.</p>
+                <a href="#">Learn more →</a>
+            </div>
+            <div class="opensource-card">
+                <h3>Open source</h3>
+                <p>Build custom integrations.</p>
+                <a href="#">Learn more →</a>
+            </div>
+            <div class="opensource-card">
+                <h3>Open source</h3>
+                <p>Join our developer community.</p>
+                <a href="#">Learn more →</a>
+            </div>
+        </div>
+        <div class="opensource-cta">
+            <a href="#" class="btn-download">Learn more</a>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission-section">
+        <p class="mission-statement">Cursor is an applied team focused on building the future of coding.</p>
+        <div class="mission-likes">
+            <span>👍</span>
+            <span>1.2k</span>
+        </div>
+        <div class="mission-image">
+            <div class="mission-image-placeholder">
+                Team Photo - Office/Classroom Setting
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="reviews-section">
+        <div class="review-item">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"Cursor has completely changed how I approach coding. The AI assistance is incredibly helpful and saves me hours every day."</p>
+            <div class="review-author">Alex Chen, Software Engineer</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"Best code editor I've used. The context awareness and intelligent suggestions are game-changing."</p>
+            <div class="review-author">Maria Garcia, Full Stack Developer</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"Cursor makes complex codebases approachable. I can understand and contribute to projects much faster now."</p>
+            <div class="review-author">Robert Taylor, Tech Lead</div>
+        </div>
+        <div class="review-item">
+            <div class="review-stars">★★★★★</div>
+            <p class="review-text">"The AI pair programming experience is incredible. It's like having a senior developer helping you at all times."</p>
+            <div class="review-author">Lisa Anderson, Senior Engineer</div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Try Cursor now.</h2>
+        <a href="#download" class="btn-download">Download for free</a>
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <div class="container">
-            <p>&copy; 2025 Sam Breschi. All rights reserved.</p>
+        <div class="footer-container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Updates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#">Docs</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Tutorials</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Licenses</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2023 Cursor. All rights reserved.</p>
+                <div class="footer-social">
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="GitHub">💻</a>
+                    <a href="#" aria-label="Discord">💬</a>
+                </div>
+            </div>
         </div>
     </footer>
-
-    <script>
-        // Theme management
-        const html = document.documentElement;
-        const themeToggle = document.getElementById('themeToggle');
-        const themeLabel = document.getElementById('themeLabel');
-        const STORAGE_KEY = 'theme-preference';
-
-        // Get stored preference or system preference
-        function getThemePreference() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                return stored;
-            }
-            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        }
-
-        // Apply theme
-        function setTheme(theme) {
-            if (theme === 'dark' || theme === 'light') {
-                html.setAttribute('data-theme', theme);
-                themeLabel.textContent = theme === 'dark' ? 'Light' : 'Dark';
-            }
-        }
-
-        // Toggle theme
-        function toggleTheme() {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-            localStorage.setItem(STORAGE_KEY, newTheme);
-        }
-
-        // Initialize
-        setTheme(getThemePreference());
-        themeToggle.addEventListener('click', toggleTheme);
-
-        // Listen for system preference changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem(STORAGE_KEY)) {
-                setTheme(e.matches ? 'dark' : 'light');
-            }
-        });
-
-        // Mobile menu management
-        const hamburger = document.getElementById('hamburger');
-        const nav = document.getElementById('nav');
-        const hamburgerIcon = document.getElementById('hamburgerIcon');
-
-        hamburger.addEventListener('click', () => {
-            nav.classList.toggle('active');
-            hamburgerIcon.textContent = nav.classList.contains('active') ? '✕' : '☰';
-        });
-
-        // Close menu when clicking a nav link
-        nav.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                nav.classList.remove('active');
-                hamburgerIcon.textContent = '☰';
-            });
-        });
-    </script>
 </body>
 </html>
-
-
