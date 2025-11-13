@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sam Breschi Training</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --border: #aaaaaa;
+        }
+
+        [data-theme="dark"] {
+            --bg: #000000;
+            --text: #ffffff;
+            --border: #555555;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #000000;
+                --text: #ffffff;
+                --border: #555555;
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Courier New", Courier, monospace;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 1rem;
+            position: sticky;
+            top: 0;
+            background-color: var(--bg);
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .wordmark {
+            font-weight: bold;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            cursor: pointer;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        nav {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--text);
+            padding: 0.25rem 0.75rem;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--text);
+            color: var(--bg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 767px) {
+            .hamburger {
+                display: block;
+                order: 2;
+            }
+
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .theme-toggle {
+                order: 1;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--bg);
+                border-bottom: 1px solid var(--border);
+                flex-direction: column;
+                gap: 0;
+                padding: 1rem 0;
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 1rem 1.5rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 4rem 0;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        /* Hero */
+        .hero {
+            padding: 5rem 0;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .hero-image {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background-color: var(--border);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .hero-text {
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .hero-subheadline {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-value-prop {
+            font-size: 1rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--bg);
+            color: var(--text);
+            border: 2px solid var(--text);
+            border-radius: 3px;
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--text);
+            color: var(--bg);
+        }
+
+        /* Mission Section */
+        .mission {
+            background-color: var(--bg);
+            padding: 4rem 0;
+        }
+
+        .mission-statement {
+            font-size: 1.5rem;
+            line-height: 1.7;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* Class Section */
+        .class-layout {
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+        }
+
+        .class-intro {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .class-columns {
+            display: grid;
+            gap: 3rem;
+        }
+
+        .class-structure ul {
+            list-style: none;
+            font-size: 1rem;
+        }
+
+        .class-structure li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .class-structure li:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .schedule-card {
+            border: 1px solid var(--border);
+            padding: 2rem;
+        }
+
+        .schedule-card p {
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .schedule-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .class-image {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background-color: var(--border);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-top: 2rem;
+        }
+
+        /* Philosophy Section */
+        .philosophy {
+            background-color: var(--bg);
+        }
+
+        .philosophy-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .philosophy-item {
+            padding: 2rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .philosophy-image {
+            width: 100%;
+            aspect-ratio: 21 / 9;
+            background-color: var(--border);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            opacity: 0.6;
+            margin-top: 3rem;
+        }
+
+        /* Section Intro */
+        .section-intro {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            max-width: 700px;
+        }
+
+        /* Program Card */
+        .program-card {
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            max-width: 600px;
+        }
+
+        .program-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .program-card p {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Contact Links */
+        #contact a {
+            color: var(--text);
+            text-decoration: underline;
+        }
+
+        #contact a:hover {
+            opacity: 0.7;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--text);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .hero-content {
+                flex-direction: row;
+                align-items: center;
+                gap: 4rem;
+            }
+
+            .hero-image {
+                flex: 1;
+                aspect-ratio: 3 / 4;
+            }
+
+            .hero-text {
+                flex: 1;
+                text-align: left;
+            }
+
+            .hero-subheadline {
+                margin-left: 0;
+            }
+
+            .hero-value-prop {
+                margin-left: 0;
+            }
+
+            .class-columns {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .philosophy-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 3rem;
+            }
+
+            .philosophy-item {
+                border-top: none;
+                border-bottom: none;
+                border-left: 1px solid var(--border);
+                border-right: 1px solid var(--border);
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            section {
+                padding: 6rem 0;
+            }
+
+            .hero {
+                padding: 7rem 0;
+            }
+
+            .mission {
+                padding: 5rem 0;
+            }
+
+            .mission-statement {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="wordmark">Sam Breschi — Mindful Fitness</div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <span id="themeLabel">Dark</span>
+                </button>
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span id="hamburgerIcon">☰</span>
+                </button>
+                <nav id="nav">
+                    <a href="#about">About</a>
+                    <a href="#method">Method</a>
+                    <a href="#programs">Programs</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-image">
+                        [Hero Image]
+                    </div>
+                    <div class="hero-text">
+                        <h1>Build the body you want.</h1>
+                        <div class="hero-subheadline">
+                            Private training for people who've already built a life.
+                        </div>
+                        <a href="#programs" class="btn-primary">Apply for 1:1 Coaching</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section id="mission" class="mission">
+            <div class="container">
+                <p class="mission-statement">
+                    You define success. I design the system—training, nutrition, recovery, and mindfulness—to deliver it.
+                </p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="container">
+                <h2>About</h2>
+                <p class="section-intro">
+                    <strong>Personalized. Measurable. Sustainable.</strong><br>
+                    No generic plans, no all-or-nothing mindset. We build strength, balance, and awareness that fit your life.
+                </p>
+                <div class="class-image">
+                    [About Image]
+                </div>
+            </div>
+        </section>
+
+        <!-- Method Section -->
+        <section id="method">
+            <div class="container">
+                <h2>Method</h2>
+                <div class="class-image" style="margin-bottom: 2rem;">
+                    [Method Image]
+                </div>
+                <p class="section-intro">
+                    Assess → Design → Iterate
+                </p>
+                <div class="philosophy-grid">
+                    <div class="philosophy-item">
+                        <strong>Assess where you are</strong>
+                    </div>
+                    <div class="philosophy-item">
+                        <strong>Design a program around your goals</strong>
+                    </div>
+                    <div class="philosophy-item">
+                        <strong>Iterate weekly until it feels effortless</strong>
+                    </div>
+                </div>
+                <p class="section-intro" style="margin-top: 2rem;">
+                    We track what matters to you—strength, energy, aesthetics, or simply feeling great.
+                </p>
+            </div>
+        </section>
+
+        <!-- Programs Section -->
+        <section id="programs">
+            <div class="container">
+                <h2>Programs</h2>
+                <div class="class-image" style="margin-bottom: 2.5rem;">
+                    [Programs Image]
+                </div>
+                <div class="program-card">
+                    <h3>1:1 Coaching — $3,500/mo</h3>
+                    <p>Bespoke partnership. Ongoing support. Unlimited communication.</p>
+                    <p style="margin-top: 1rem;">
+                        <em>Orientation Month: define goals, baselines, and systems. Cancel anytime.</em>
+                    </p>
+                    <a href="#contact" class="btn-primary" style="margin-top: 1.5rem;">Apply Now</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Coach Section -->
+        <section id="coach">
+            <div class="container">
+                <h2>Coach</h2>
+                <h3 style="font-size: 1.25rem; margin-bottom: 1rem;">Meet Sam Breschi</h3>
+                <p class="section-intro">
+                    Strength coach + yoga teacher. 10+ years experience helping high-performing individuals create freedom through mindful fitness.
+                </p>
+                <div class="class-image">
+                    [Coach Image]
+                </div>
+            </div>
+        </section>
+
+        <!-- Retreats Section -->
+        <section id="retreats">
+            <div class="container">
+                <h2>Retreats</h2>
+                <div class="philosophy-image">
+                    [Retreats Image]
+                </div>
+                <p class="section-intro" style="margin-top: 2rem;">
+                    Immersive small-group experiences combining movement, recovery, and awareness.
+                </p>
+                <a href="#contact" class="btn-primary">Inquire for Next Date</a>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="container">
+                <h2>Contact</h2>
+                <p class="section-intro">
+                    <strong>Email:</strong> sam@sambreschi.com<br>
+                    <strong>Instagram:</strong> <a href="https://instagram.com/sambreschi" target="_blank">@sambreschi</a><br>
+                    <strong>Newsletter:</strong> Weekly insights on sustainable strength.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Sam Breschi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme management
+        const html = document.documentElement;
+        const themeToggle = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
+        const STORAGE_KEY = 'theme-preference';
+
+        // Get stored preference or system preference
+        function getThemePreference() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                return stored;
+            }
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        // Apply theme
+        function setTheme(theme) {
+            if (theme === 'dark' || theme === 'light') {
+                html.setAttribute('data-theme', theme);
+                themeLabel.textContent = theme === 'dark' ? 'Light' : 'Dark';
+            }
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+            localStorage.setItem(STORAGE_KEY, newTheme);
+        }
+
+        // Initialize
+        setTheme(getThemePreference());
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Listen for system preference changes
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                setTheme(e.matches ? 'dark' : 'light');
+            }
+        });
+
+        // Mobile menu management
+        const hamburger = document.getElementById('hamburger');
+        const nav = document.getElementById('nav');
+        const hamburgerIcon = document.getElementById('hamburgerIcon');
+
+        hamburger.addEventListener('click', () => {
+            nav.classList.toggle('active');
+            hamburgerIcon.textContent = nav.classList.contains('active') ? '✕' : '☰';
+        });
+
+        // Close menu when clicking a nav link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+                hamburgerIcon.textContent = '☰';
+            });
+        });
+    </script>
+</body>
+</html>
+
+

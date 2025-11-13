@@ -1,0 +1,107 @@
+[
+  {
+    "id": "2fef957a-8d08-4756-8218-5aa3eb421dc5",
+    "title": "h1: Whatever you want from your bo",
+    "comment": "simplify this language",
+    "selector": "div.hero-content > div.hero-text:nth-child(2) > h1.float-highlight",
+    "boundingRect": {
+      "x": 978,
+      "y": 212,
+      "w": 431,
+      "h": 312
+    },
+    "screenshotPath": "./screenshots/moat-1762347995752-pwalk5wl4.png",
+    "status": "done",
+    "timestamp": 1762347995872
+  },
+  {
+    "id": "582ecb77-9efe-4df7-aa5f-469294c4d4b5",
+    "title": "Colored Container",
+    "comment": "refine this text",
+    "selector": "div.hero-content > div.hero-text:nth-child(2) > div.hero-subheadline.float-highlight",
+    "boundingRect": {
+      "x": 978,
+      "y": 548,
+      "w": 431,
+      "h": 84
+    },
+    "screenshotPath": "./screenshots/moat-1762348061933-0qzpdlac3.png",
+    "status": "done",
+    "timestamp": 1762348062023
+  },
+  {
+    "id": "f89e89e6-0f10-4626-85cf-1c90f9a1be49",
+    "title": "Link: Request Invite",
+    "comment": "border radius of 3px on all buttons",
+    "selector": "a[href=\"#apply\"]",
+    "boundingRect": {
+      "x": 978,
+      "y": 672,
+      "w": 218,
+      "h": 62
+    },
+    "screenshotPath": "./screenshots/moat-1762348079136-gtlvtk2b2.png",
+    "status": "done",
+    "timestamp": 1762348079224
+  },
+  {
+    "id": "0bc3ddd6-462e-4b05-b381-f2275f458cf5",
+    "title": "h1: Build the body you want.",
+    "comment": "semi bold text",
+    "selector": "div.hero-content > div.hero-text:nth-child(2) > h1.float-highlight",
+    "boundingRect": {
+      "x": 701,
+      "y": 310,
+      "w": 431,
+      "h": 125
+    },
+    "screenshotPath": "./screenshots/moat-1762349066537-2n9wdkhjt.png",
+    "status": "done",
+    "timestamp": 1762349066634
+  },
+  {
+    "id": "6bbc35fa-805c-41b2-9f2a-40aaa6b949c0",
+    "title": "header: SAM BRESCHI TRAINING\n         ",
+    "comment": "no bottom border",
+    "selector": "header.float-highlight",
+    "boundingRect": {
+      "x": 0,
+      "y": 0,
+      "w": 1335,
+      "h": 77
+    },
+    "screenshotPath": "./screenshots/moat-1762349099882-bc7kuezwl.png",
+    "status": "done",
+    "timestamp": 1762349099982
+  },
+  {
+    "id": "9d4db83d-ec8b-4632-8e64-34ab569d6551",
+    "title": "Container #philosophy",
+    "comment": "move this section up above The Session",
+    "selector": "#philosophy",
+    "boundingRect": {
+      "x": 0,
+      "y": 1427,
+      "w": 1335,
+      "h": 921
+    },
+    "screenshotPath": "./screenshots/moat-1762349155806-3wms4xovd.png",
+    "status": "done",
+    "timestamp": 1762349155932
+  },
+  {
+    "id": "07fe9a0a-0387-4eb5-93d7-7f7b6c7af9c5",
+    "title": "p: You define success. I design t",
+    "comment": "Let's move this into it's own section just below the hero. center it as if it's the mission statement",
+    "selector": "div.hero-content > div.hero-text:nth-child(2) > p.hero-value-prop.float-highlight",
+    "boundingRect": {
+      "x": 701,
+      "y": 498,
+      "w": 431,
+      "h": 82
+    },
+    "screenshotPath": "./screenshots/moat-1762349938283-aeq3zj3vh.png",
+    "status": "done",
+    "timestamp": 1762349938381
+  }
+]
