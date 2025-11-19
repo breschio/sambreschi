@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cursor - The AI-powered code editor</title>
+    <title>SAM BRESCHI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Mono&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,22 +23,36 @@
             --accent: #ffffff;
         }
 
+        [data-theme="light"] {
+            --bg-dark: #ffffff;
+            --bg-card: #f5f5f5;
+            --text-primary: #0a0a0a;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --accent: #0a0a0a;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            font-family: 'PT Mono', monospace;
             background-color: var(--bg-dark);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.65;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            letter-spacing: -0.01em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         /* Header */
         header {
             position: sticky;
             top: 0;
-            background-color: var(--bg-dark);
+            background-color: var(--bg-card);
             z-index: 1000;
-            border-bottom: 1px solid var(--border-color);
             padding: 1rem 0;
+            transition: background-color 0.3s ease;
         }
 
         .header-container {
@@ -52,6 +69,7 @@
             font-weight: 600;
             color: var(--text-primary);
             text-decoration: none;
+            letter-spacing: 0.01em;
         }
 
         nav {
@@ -65,6 +83,7 @@
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            letter-spacing: 0.01em;
         }
 
         nav a:hover {
@@ -72,18 +91,45 @@
         }
 
         .btn-download {
-            background-color: var(--text-primary);
-            color: var(--bg-dark);
+            background-color: #9CAF88;
+            color: #0a0a0a;
             padding: 0.5rem 1.25rem;
             border-radius: 6px;
             text-decoration: none;
             font-size: 0.875rem;
             font-weight: 500;
-            transition: opacity 0.2s;
+            transition: all 0.2s ease;
+            letter-spacing: 0.02em;
         }
 
         .btn-download:hover {
-            opacity: 0.9;
+            background-color: #8B9E77;
+            transform: translateY(-1px);
+        }
+
+        /* Theme Switcher */
+        .theme-switcher {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            height: 38px;
+        }
+
+        .theme-switcher svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .theme-switcher:hover {
+            background-color: var(--bg-card);
         }
 
         /* Hero Section */
@@ -101,10 +147,11 @@
         .hero h1 {
             font-size: clamp(1.5rem, 3vw, 2.75rem);
             font-weight: 400;
-            line-height: 1.05;
+            line-height: 1.2;
             margin-bottom: 2rem;
-            letter-spacing: -0.03em;
+            letter-spacing: -0.015em;
             text-align: left;
+            word-spacing: 0.05em;
         }
 
         .hero .btn-download {
@@ -164,6 +211,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            letter-spacing: 0.01em;
         }
 
         /* Feature Sections */
@@ -190,18 +239,19 @@
         }
 
         .feature-content h2 {
-            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
             margin-bottom: 1.25rem;
             line-height: 1.2;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.015em;
         }
 
         .feature-content p {
             font-size: 1rem;
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 1rem;
+            letter-spacing: 0.005em;
         }
 
         .feature-image {
@@ -236,10 +286,11 @@
         }
 
         .testimonials-section h2 {
-            font-size: clamp(2rem, 4vw, 3.25rem);
-            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
             margin-bottom: 4rem;
-            letter-spacing: -0.02em;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
         }
 
         .testimonials-grid {
@@ -255,19 +306,22 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             text-align: left;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .testimonial-card p {
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 1rem;
             font-size: 0.9375rem;
+            letter-spacing: 0.005em;
         }
 
         .testimonial-author {
             color: var(--text-primary);
             font-weight: 500;
             font-size: 0.875rem;
+            letter-spacing: 0.01em;
         }
 
         .testimonial-role {
@@ -283,10 +337,11 @@
         }
 
         .blog-section h2 {
-            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
             margin-bottom: 3rem;
-            letter-spacing: -0.02em;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
         }
 
         .blog-grid {
@@ -300,6 +355,7 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             overflow: hidden;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .blog-card-image {
@@ -311,6 +367,13 @@
             justify-content: center;
             color: var(--text-secondary);
             font-size: 0.9rem;
+            overflow: hidden;
+        }
+
+        .blog-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .blog-card-content {
@@ -321,13 +384,16 @@
             font-size: 1.125rem;
             margin-bottom: 0.75rem;
             font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
 
         .blog-card p {
             color: var(--text-secondary);
             margin-bottom: 1rem;
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 0.9375rem;
+            letter-spacing: 0.005em;
         }
 
         .blog-card a {
@@ -349,10 +415,11 @@
         }
 
         .opensource-section h2 {
-            font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
             margin-bottom: 3rem;
-            letter-spacing: -0.02em;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
         }
 
         .opensource-grid {
@@ -367,19 +434,23 @@
             padding: 2rem;
             border-radius: 12px;
             border: 1px solid var(--border-color);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .opensource-card h3 {
             font-size: 1.125rem;
             margin-bottom: 0.75rem;
             font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.3;
         }
 
         .opensource-card p {
             color: var(--text-secondary);
             margin-bottom: 1rem;
-            line-height: 1.6;
+            line-height: 1.7;
             font-size: 0.9375rem;
+            letter-spacing: 0.005em;
         }
 
         .opensource-card a {
@@ -411,19 +482,30 @@
         }
 
         .mission-statement {
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            font-weight: 600;
-            line-height: 1.4;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
+            line-height: 1.2;
             margin-bottom: 2rem;
-            max-width: 800px;
+            max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
+            letter-spacing: -0.015em;
+            word-spacing: 0.05em;
         }
 
         .mission-image {
             margin-top: 3rem;
             border-radius: 12px;
             overflow: hidden;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+
+        .mission-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
         .mission-image-placeholder {
@@ -448,6 +530,7 @@
             border-radius: 8px;
             color: var(--text-secondary);
             font-size: 0.875rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
         }
 
         /* Reviews Section */
@@ -460,6 +543,7 @@
         .review-item {
             padding: 1.5rem 0;
             border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
         }
 
         .review-item:last-child {
@@ -474,15 +558,17 @@
 
         .review-text {
             color: var(--text-secondary);
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 0.75rem;
             font-size: 0.9375rem;
+            letter-spacing: 0.005em;
         }
 
         .review-author {
             color: var(--text-primary);
             font-weight: 500;
             font-size: 0.875rem;
+            letter-spacing: 0.01em;
         }
 
         /* CTA Section */
@@ -494,10 +580,11 @@
         }
 
         .cta-section h2 {
-            font-size: clamp(2rem, 4vw, 3.25rem);
-            font-weight: 700;
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 400;
             margin-bottom: 2rem;
-            letter-spacing: -0.02em;
+            line-height: 1.2;
+            letter-spacing: -0.015em;
         }
 
         .cta-section .btn-download {
@@ -508,8 +595,8 @@
         /* Footer */
         footer {
             background-color: var(--bg-card);
-            border-top: 1px solid var(--border-color);
-            padding: 4rem 2rem 2rem;
+            padding: 2rem;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
         }
 
         .footer-container {
@@ -529,6 +616,7 @@
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--text-primary);
+            letter-spacing: 0.02em;
         }
 
         .footer-column ul {
@@ -544,6 +632,7 @@
             text-decoration: none;
             font-size: 0.8125rem;
             transition: color 0.2s;
+            letter-spacing: 0.01em;
         }
 
         .footer-column a:hover {
@@ -554,8 +643,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
             flex-wrap: wrap;
             gap: 1rem;
         }
@@ -629,14 +716,16 @@
     <!-- Header -->
     <header>
         <div class="header-container">
-            <a href="#" class="logo">Sam Breschi</a>
+            <a href="#" class="logo">SAM BRESCHI</a>
             <nav>
-                <a href="#docs">Docs</a>
-                <a href="#pricing">Pricing</a>
-                <a href="#blog">Blog</a>
-                <a href="#community">Community</a>
-                <a href="#signin">Sign in</a>
                 <a href="#download" class="btn-download">Apply</a>
+                <button class="theme-switcher" id="theme-toggle" aria-label="Toggle theme">
+                    <span id="theme-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+                        </svg>
+                    </span>
+                </button>
             </nav>
         </div>
     </header>
@@ -644,7 +733,7 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Building stronger bodies, for people who have already built a life.</h1>
+            <h1>I build strong bodies for people who have already built a life</h1>
             <a href="#download" class="btn-download">Apply for coaching</a>
         </div>
         <div class="hero-image">
@@ -652,108 +741,83 @@
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="blog-section">
-        <h2>Our core foundation</h2>
-        <div class="blog-grid">
-            <div class="blog-card">
-                <div class="blog-card-image">Blog Post Image</div>
-                <div class="blog-card-content">
-                    <h3>Mindful Strength</h3>
-                    <p>Training that builds capability—not chaos. Simple workouts, clear weekly structure, and consistency you can stick with.</p>
-                    <a href="#">Read more →</a>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-card-image">Blog Post Image</div>
-                <div class="blog-card-content">
-                    <h3>Mindful Strength</h3>
-                    <p>Training that builds capability—not chaos. Simple workouts, clear weekly structure, and consistency you can stick with.</p>
-                    <a href="#">Read more →</a>
-                </div>
-            </div>
-            <div class="blog-card">
-                <div class="blog-card-image">Blog Post Image</div>
-                <div class="blog-card-content">
-                    <h3>Nutrition That Supports You</h3>
-                    <p>Whole foods, protein-forward meals, and daily rhythms that give you energy, clarity, and steady progress.</p>
-                    <a href="#">Read more →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Integrations Section -->
-    <section class="integrations">
-        <div class="integrations-grid">
-            <div class="integration-item">Stripe</div>
-            <div class="integration-item">OpenAI</div>
-            <div class="integration-item">Vercel</div>
-            <div class="integration-item">Supabase</div>
-            <div class="integration-item">Replit</div>
-            <div class="integration-item">Linear</div>
-            <div class="integration-item">Airtable</div>
-        </div>
-    </section>
-
     <!-- Feature: AI-powered Code Generation -->
     <section class="feature-section">
         <div class="feature-container">
             <div class="feature-content">
-                <h2>AI-powered code generation</h2>
-                <p>Get intelligent code suggestions, fixes, and improvements powered by advanced AI. Cursor understands your codebase and helps you write better code faster.</p>
-                <p>Fix bugs, implement features, and refactor code with AI assistance that learns from your project context.</p>
+                <h2>Together we'll practice steady, mindful, effort</h2>
+                <p style="font-size: 1.125rem;">Strength comes from consistency, awareness, and habits that fit the life you already live.</p>
+                <p>This approach respects real life. No intensity culture, no extremes—just clear structure, mindful movement, and routines that support long-term strength.</p>
             </div>
             <div class="feature-image">
-                <div class="feature-image-placeholder">
-                    AI Code Generation Screenshot
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Feature: Chat with Code -->
-    <section class="feature-section">
-        <div class="feature-container">
-            <div class="feature-image">
-                <div class="feature-image-placeholder">
-                    Chat Interface Screenshot
-                </div>
-            </div>
-            <div class="feature-content">
-                <h2>Chat with your code</h2>
-                <p>Have natural conversations with your codebase. Ask questions, get explanations, and receive refactoring suggestions.</p>
-                <p>Understand complex codebases faster with AI that can explain any part of your code in plain English.</p>
+                <img src="/images/sam-running-veo-1.gif" alt="My philosophy">
             </div>
         </div>
     </section>
 
     <!-- Blog Section -->
     <section class="blog-section">
-        <h2>Stay on track</h2>
+        <h2>What I teach</h2>
         <div class="blog-grid">
             <div class="blog-card">
-                <div class="blog-card-image">Blog Post Image</div>
+                <div class="blog-card-image">
+                    <img src="images/sam-philosophy-gpt-1.png" alt="Mindful Strength">
+                </div>
+                <div class="blog-card-content">
+                    <h3>Mindful Strength</h3>
+                    <p>Training that builds capability—not chaos. Simple workouts, clear weekly structure, and consistency you can stick with.</p>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/sam-client-gpt-2.png" alt="Movement that Fits Your Life">
+                </div>
+                <div class="blog-card-content">
+                    <h3>Movement that Fits Your Life</h3>
+                    <p>Running, mobility, and functional strength designed for people with real schedules and real responsibilities.</p>
+                </div>
+            </div>
+            <div class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/sam-client-gpt-3.png" alt="Nutrition That Supports You">
+                </div>
+                <div class="blog-card-content">
+                    <h3>Nutrition That Supports You</h3>
+                    <p>Whole foods, protein-forward meals, and daily rhythms that give you energy, clarity, and steady progress.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <h2>How we improve</h2>
+        <div class="blog-grid">
+            <div class="blog-card">
+                <div class="blog-card-image">
+                    <img src="images/sam-client-gpt-4.png" alt="Training Session">
+                </div>
                 <div class="blog-card-content">
                     <h3>Weekly Plans</h3>
                     <p>A grounded structure tuned to your goals, schedule, and lifestyle</p>
-                    <a href="#">Read more →</a>
                 </div>
             </div>
             <div class="blog-card">
-                <div class="blog-card-image">Blog Post Image</div>
+                <div class="blog-card-image">
+                    <img src="images/sam-client-gpt-5.png" alt="Coaching Progress">
+                </div>
                 <div class="blog-card-content">
                     <h3>Ongoing Adjustments</h3>
                     <p>Direct communication and real-time tweaks so your training adapts as life happens</p>
-                    <a href="#">Read more →</a>
                 </div>
             </div>
             <div class="blog-card">
-                <div class="blog-card-image">Blog Post Image</div>
+                <div class="blog-card-image">
+                    <img src="images/sam-client-gpt-1.png" alt="Simple Tracking">
+                </div>
                 <div class="blog-card-content">
                     <h3>Simple Traking</h3>
                     <p>Clear targets around movement, meals and habits.</p>
-                    <a href="#">Read more →</a>
                 </div>
             </div>
         </div>
@@ -763,7 +827,7 @@
     <section class="feature-section">
         <div class="feature-container">
             <div class="feature-content">
-                <h2>About Sam</h2>
+                <h2>Who I am</h2>
                 <p>I help people rebuild strength with calm structure and simple routines. My approach blends endurance work, functional strength, and protein-forward nutrition into a lifestyle you can sustain. It's not about pushing harder—it's about feeling grounded, capable, and connected to your body again.</p>
             </div>
             <div class="feature-image">
@@ -774,7 +838,7 @@
 
     <!-- Testimonials Section -->
     <section class="testimonials-section">
-        <h2>What people are saying</h2>
+        <h2>What my clients say</h2>
         <div class="testimonials-grid">
             <div class="testimonial-card">
                 <p>"Sam helped me feel strong again for the first time in years. The structure is simple, steady, and exactly what I needed."</p>
@@ -809,71 +873,11 @@
         </div>
     </section>
 
-    <!-- Open Source Section -->
-    <section class="opensource-section">
-        <h2>Open source.</h2>
-        <div class="opensource-grid">
-            <div class="opensource-card">
-                <h3>Open source</h3>
-                <p>Contribute to Cursor's core.</p>
-                <a href="#">Learn more →</a>
-            </div>
-            <div class="opensource-card">
-                <h3>Open source</h3>
-                <p>Extend Cursor with plugins.</p>
-                <a href="#">Learn more →</a>
-            </div>
-            <div class="opensource-card">
-                <h3>Open source</h3>
-                <p>Build custom integrations.</p>
-                <a href="#">Learn more →</a>
-            </div>
-            <div class="opensource-card">
-                <h3>Open source</h3>
-                <p>Join our developer community.</p>
-                <a href="#">Learn more →</a>
-            </div>
-        </div>
-        <div class="opensource-cta">
-            <a href="#" class="btn-download">Learn more</a>
-        </div>
-    </section>
-
     <!-- Mission Section -->
     <section class="mission-section">
-        <p class="mission-statement">Cursor is an applied team focused on building the future of coding.</p>
-        <div class="mission-likes">
-            <span>👍</span>
-            <span>1.2k</span>
-        </div>
+        <p class="mission-statement">Build strength that lasts—without chaos, extremes, or giving up the life you've built.</p>
         <div class="mission-image">
-            <div class="mission-image-placeholder">
-                Team Photo - Office/Classroom Setting
-            </div>
-        </div>
-    </section>
-
-    <!-- Reviews Section -->
-    <section class="reviews-section">
-        <div class="review-item">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text">"Cursor has completely changed how I approach coding. The AI assistance is incredibly helpful and saves me hours every day."</p>
-            <div class="review-author">Alex Chen, Software Engineer</div>
-        </div>
-        <div class="review-item">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text">"Best code editor I've used. The context awareness and intelligent suggestions are game-changing."</p>
-            <div class="review-author">Maria Garcia, Full Stack Developer</div>
-        </div>
-        <div class="review-item">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text">"Cursor makes complex codebases approachable. I can understand and contribute to projects much faster now."</p>
-            <div class="review-author">Robert Taylor, Tech Lead</div>
-        </div>
-        <div class="review-item">
-            <div class="review-stars">★★★★★</div>
-            <p class="review-text">"The AI pair programming experience is incredible. It's like having a senior developer helping you at all times."</p>
-            <div class="review-author">Lisa Anderson, Senior Engineer</div>
+            <img src="images/sam-client-gpt-7.png" alt="Sam Breschi Training">
         </div>
     </section>
 
@@ -886,53 +890,50 @@
     <!-- Footer -->
     <footer>
         <div class="footer-container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h4>Product</h4>
-                    <ul>
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Pricing</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Updates</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Press</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Resources</h4>
-                    <ul>
-                        <li><a href="#">Docs</a></li>
-                        <li><a href="#">Community</a></li>
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#">Tutorials</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Legal</h4>
-                    <ul>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                        <li><a href="#">Licenses</a></li>
-                    </ul>
-                </div>
-            </div>
             <div class="footer-bottom">
-                <p>© 2023 Cursor. All rights reserved.</p>
-                <div class="footer-social">
-                    <a href="#" aria-label="Twitter">🐦</a>
-                    <a href="#" aria-label="GitHub">💻</a>
-                    <a href="#" aria-label="Discord">💬</a>
-                </div>
+                <p>© 2025 Sam Breschi. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // Theme switcher functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        // SVG icons
+        const moonIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z" clip-rule="evenodd" />
+        </svg>`;
+        
+        const sunIcon = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+        </svg>`;
+
+        // Check for saved theme preference or default to dark mode
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        // Set initial theme
+        if (currentTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            themeIcon.innerHTML = moonIcon;
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            
+            if (currentTheme === 'light') {
+                html.removeAttribute('data-theme');
+                themeIcon.innerHTML = sunIcon;
+                localStorage.setItem('theme', 'dark');
+            } else {
+                html.setAttribute('data-theme', 'light');
+                themeIcon.innerHTML = moonIcon;
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    </script>
 </body>
 </html>
